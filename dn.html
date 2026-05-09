@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>艺视界 -（概念站） 全球视觉艺术创意平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #f43f5e;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gray-100: #e2e8f0;
+            --gray-400: #94a3b8;
+            --gray-600: #64748b;
+            --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #f43f5e 100%);
+            --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 20px 40px rgba(99, 102, 241, 0.15);
+            --transition-base: all 0.3s ease;
+            --transition-slow: all 0.6s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+        
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+        
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+        
+.navbar {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    /* 保留你原来的上下padding，同时锁死高度 */
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--gray-100);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-base);
+    /* 👇 关键：固定导航高度，避免被内容撑高 */
+    height: 70px;
+    box-sizing: border-box; /* 让padding算在高度内 */
+}
+
+.navbar-scrolled {
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: var(--shadow-md);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* 让容器占满导航高度，内容居中 */
+    height: 100%;
+}
+
+/* 👇 图片LOGO样式，和你原来一致，只改居中逻辑 */
+.logo {
+    display: flex;
+    align-items: center;
+    height: 100%; /* 让LOGO容器占满导航高度，保证垂直居中 */
+}
+.logo img {
+    height: 60px; /* 这里控制LOGO大小，导航不会再跟着变 */
+    width: auto;
+    display: block;
+}
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: var(--transition-base);
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: var(--transition-base);
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition-base);
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+        
+        .btn-white {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .btn-white:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline-white {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+        
+        .btn-outline-white:hover {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .hero {
+            min-height: 100vh;
+            background: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 120px 0 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853') center/cover;
+            opacity: 0.3;
+            filter: blur(1px);
+        }
+        
+        .hero-content {
+            z-index: 1;
+            max-width: 1000px;
+            padding: 0 2rem;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.5);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+        
+        .hero h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            margin-bottom: 1.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+        }
+        
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: clamp(2rem, 5vw, 4rem);
+            margin-top: 4rem;
+            padding-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            text-align: center;
+            min-width: 120px;
+        }
+        
+        .stat-number {
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            font-weight: 900;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-tag {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .section-desc {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .features {
+            padding: 6rem 0;
+            background: white;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: var(--light);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: var(--transition-base);
+            border: 2px solid transparent;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .feature-card.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 2rem;
+            color: white;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card p {
+            color: var(--gray-600);
+            line-height: 1.7;
+        }
+        
+        .showcase {
+            padding: 6rem 0;
+            background: var(--light);
+        }
+        
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .showcase-item {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .showcase-item.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .showcase-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .showcase-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .showcase-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            opacity: 0;
+            transition: var(--transition-base);
+        }
+        
+        .showcase-item:hover .showcase-overlay {
+            opacity: 1;
+        }
+        
+        .artist-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+        
+        .artist-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: white;
+            overflow: hidden;
+        }
+        
+        .artist-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .community {
+            padding: 6rem 0;
+            background: white;
+        }
+        
+        .community-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .community-text h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1.5rem;
+        }
+        
+        .community-text p {
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+        
+        .community-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .community-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .community-feature-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+        
+        .community-feature-text strong {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+        
+        .community-feature-text p {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
+        .community-image {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+        
+        .community-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .community-image:hover img {
+            transform: scale(1.02);
+        }
+        
+        .creators {
+            padding: 6rem 0;
+            background: var(--light);
+        }
+        
+        .creators-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .creator-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition-base);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .creator-card.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .creator-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .creator-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            border: 4px solid var(--light);
+            overflow: hidden;
+        }
+        
+        .creator-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .creator-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .creator-category {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .creator-stats {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--gray-100);
+        }
+        
+        .creator-stat {
+            text-align: center;
+        }
+        
+        .creator-stat-value {
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .creator-stat-label {
+            font-size: 0.8rem;
+            color: var(--gray-400);
+        }
+        
+        .cta {
+            padding: 6rem 0;
+            background: var(--gradient);
+            text-align: center;
+            color: white;
+        }
+        
+        .cta h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 5rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-brand p {
+            color: var(--gray-400);
+            margin: 1rem 0;
+            line-height: 1.8;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition-base);
+        }
+        
+        .footer-social a:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.75rem;
+        }
+        
+        .footer-section ul li a {
+            color: var(--gray-400);
+            text-decoration: none;
+            transition: var(--transition-base);
+        }
+        
+        .footer-section ul li a:hover {
+            color: white;
+            padding-left: 4px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #334155;
+            color: var(--gray-600);
+        }
+        
+        .footer-bottom a {
+            color: var(--gray-400);
+            text-decoration: none;
+            transition: var(--transition-base);
+        }
+        
+        .footer-bottom a:hover {
+            color: white;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark);
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .hero-stats {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 导航栏：只把文字LOGO换成图片 -->
+<nav class="navbar">
+    <div class="nav-container container">
+        <a href="#home" class="logo">
+            <!-- 👇 只需要在这里替换你的LOGO地址 -->
+            <img src="http://pan.cisa.cc/view.php/4fbd8479457bbd044637d0b4b602fb63.png" alt="艺视界">
+        </a>
+
+        <button class="mobile-menu-btn" aria-label="打开菜单">
+            <i class="fas fa-bars"></i>
+        </button>
+        <ul class="nav-links">
+            <li><a href="#home">首页</a></li>
+            <li><a href="#explore">探索</a></li>
+            <li><a href="#community">社区</a></li>
+            <li><a href="#creators">创作者</a></li>
+            <li><a href="#about">关于</a></li>
+        </ul>
+        <div class="nav-buttons">
+            <a href="#" class="btn btn-outline">登录</a>
+            <a href="#" class="btn btn-primary">免费注册</a>
+        </div>
+    </div>
+</nav>
+
+<section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+        <span class="hero-badge">🌟 全球领先的视觉艺术平台</span>
+        <h1>让创意被世界看见</h1>
+        <p>艺视界 - 连接全球设计师、艺术家与创意爱好者，打造数字艺术展示、创意交流与作品交易的一站式平台</p>
+        <div class="cta-buttons">
+            <a href="#" class="btn btn-primary" style="padding: 1rem 2.5rem; font-size: 1.1rem;">开始创作</a>
+            <a href="#" class="btn btn-outline-white" style="padding: 1rem 2.5rem; font-size: 1.1rem;">浏览作品</a>
+        </div>
+        <div class="hero-stats">
+            <div class="stat"><div class="stat-number">50万+</div><div>注册创作者</div></div>
+            <div class="stat"><div class="stat-number">200万+</div><div>艺术作品</div></div>
+            <div class="stat"><div class="stat-number">100万+</div><div>月度访客</div></div>
+        </div>
+    </div>
+</section>
+
+<section class="features" id="explore">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">平台功能</span>
+            <h2 class="section-title">艺视界 · 三大核心板块</h2>
+            <p class="section-desc">为视觉创作者提供全方位的支持与服务</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-palette"></i></div>
+                <h3>数字艺术展示</h3>
+                <p>高清画廊级作品展示，支持2D/3D/动态艺术，智能分类与标签系统，让每件作品都能被精准发现</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-comments"></i></div>
+                <h3>视觉创意社区</h3>
+                <p>与全球艺术家互动交流，参与话题讨论、创作挑战，获取专业反馈，共同成长进步</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-folder-open"></i></div>
+                <h3>设计师作品集</h3>
+                <p>个性化作品集页面，支持多项目展示，一键分享链接，帮助设计师获得客户与合作机会</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="showcase">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">精选作品</span>
+            <h2 class="section-title">艺视界 · 探索视觉灵感</h2>
+            <p class="section-desc">来自全球顶尖艺术家的创意佳作</p>
+        </div>
+        <div class="showcase-grid">
+            <div class="showcase-item"><img src="https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8" alt=""><div class="showcase-overlay"><h4>数字插画</h4><div class="artist-info"><div class="artist-avatar"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330" alt=""></div><span>@artdesign</span></div></div></div>
+            <div class="showcase-item"><img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853" alt=""><div class="showcase-overlay"><h4>3D建模</h4><div class="artist-info"><div class="artist-avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d" alt=""></div><span>@3dartist</span></div></div></div>
+            <div class="showcase-item"><img src="https://p1.ssl.qhimgs1.com/sdr/400__/t04bd7f80ea1e517d4b.jpg" alt=""><div class="showcase-overlay"><h4>平面设计</h4><div class="artist-info"><div class="artist-avatar"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80" alt=""></div><span>@graphicpro</span></div></div></div>
+            <div class="showcase-item"><img src="https://p3.ssl.qhimgs1.com/sdr/400__/t0152bb9f8cc5ef9653.jpg" alt=""><div class="showcase-overlay"><h4>品牌视觉</h4><div class="artist-info"><div class="artist-avatar"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e" alt=""></div><span>@brandmaster</span></div></div></div>
+            <div class="showcase-item"><img src="https://p1.ssl.qhimgs1.com/sdr/400__/t01d77ea31f7d419897.jpg" alt=""><div class="showcase-overlay"><h4>摄影艺术</h4><div class="artist-info"><div class="artist-avatar"><img src="https://images.unsplash.com/photo-1492106087820-71f171ce81d9" alt=""></div><span>@photomaster</span></div></div></div>
+            <div class="showcase-item"><img src="https://p0.ssl.qhimgs1.com/sdr/400__/t0107491190ff34f754.jpg" alt=""><div class="showcase-overlay"><h4>动态设计</h4><div class="artist-info"><div class="artist-avatar"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330" alt=""></div><span>@motionart</span></div></div></div>
+            <div class="showcase-item"><img src="https://p5.ssl.qhimgs1.com/sdr/400__/t012b03ef4b29814765.jpg" alt=""><div class="showcase-overlay"><h4>UI/UX设计</h4><div class="artist-info"><div class="artist-avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d" alt=""></div><span>@uxdesigner</span></div></div></div>
+            <div class="showcase-item"><img src="https://p0.ssl.qhimgs1.com/sdr/400__/t04f7c55805693b1954.jpg" alt=""><div class="showcase-overlay"><h4>概念艺术</h4><div class="artist-info"><div class="artist-avatar"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80" alt=""></div><span>@conceptart</span></div></div></div>
+            <div class="showcase-item"><img src="https://p3.ssl.qhimgs1.com/sdr/400__/t016922118d2df1a8e9.jpg" alt=""><div class="showcase-overlay"><h4>UI/UX设计</h4><div class="artist-info"><div class="artist-avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d" alt=""></div><span>@uxdesigner</span></div></div></div>
+            <div class="showcase-item"><img src="https://p0.ssl.qhimgs1.com/sdr/400__/t04019effb53a69a2ca.jpg" alt=""><div class="showcase-overlay"><h4>概念艺术</h4><div class="artist-info"><div class="artist-avatar"><img src="https://p0.ssl.qhimgs1.com/sdr/400__/t04019effb53a69a2ca.jpg" alt=""></div><span>@conceptart</span></div></div></div>
+        </div>        
+    </div>
+</section>
+
+<section class="community" id="community">
+    <div class="container">
+        <div class="community-content">
+            <div class="community-text">
+                <span class="section-tag">社区互动</span>
+                <h2>加入艺视界全球创意社区</h2>
+                <p>与来自100+国家的艺术家交流，参与每周创作挑战，获取专业点评，让你的创意不断进化</p>
+                <div class="community-features">
+                    <div class="community-feature"><div class="community-feature-icon"><i class="fas fa-users"></i></div><div class="community-feature-text"><strong>创作者圈子</strong><p>按领域分组交流</p></div></div>
+                    <div class="community-feature"><div class="community-feature-icon"><i class="fas fa-trophy"></i></div><div class="community-feature-text"><strong>创作挑战</strong><p>每周主题竞赛</p></div></div>
+                    <div class="community-feature"><div class="community-feature-icon"><i class="fas fa-lightbulb"></i></div><div class="community-feature-text"><strong>灵感分享</strong><p>获取创作灵感</p></div></div>
+                    <div class="community-feature"><div class="community-feature-icon"><i class="fas fa-book"></i></div><div class="community-feature-text"><strong>教程资源</strong><p>学习专业技能</p></div></div>
+                </div>
+                <a href="#" class="btn btn-primary" style="margin-top: 2rem; padding: 1rem 2rem;">加入社区</a>
+            </div>
+            <div class="community-image">
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="creators" id="creators">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">明星创作者</span>
+            <h2 class="section-title">艺视界 · 平台认证艺术家</h2>
+            <p class="section-desc">向顶尖创作者学习，获取专业灵感</p>
+        </div>
+        <div class="creators-grid">
+            <div class="creator-card"><div class="creator-avatar"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330" alt=""></div><div class="creator-name">Sarah Chen</div><div class="creator-category">数字插画师</div><div class="creator-stats"><div class="creator-stat"><div class="creator-stat-value">12.5k</div><div class="creator-stat-label">粉丝</div></div><div class="creator-stat"><div class="creator-stat-value">342</div><div class="creator-stat-label">作品</div></div></div></div>
+            <div class="creator-card"><div class="creator-avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d" alt=""></div><div class="creator-name">Mike Zhang</div><div class="creator-category">3D艺术家</div><div class="creator-stats"><div class="creator-stat"><div class="creator-stat-value">8.2k</div><div class="creator-stat-label">粉丝</div></div><div class="creator-stat"><div class="creator-stat-value">189</div><div class="creator-stat-label">作品</div></div></div></div>
+            <div class="creator-card"><div class="creator-avatar"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80" alt=""></div><div class="creator-name">Emma Liu</div><div class="creator-category">品牌设计师</div><div class="creator-stats"><div class="creator-stat"><div class="creator-stat-value">15.8k</div><div class="creator-stat-label">粉丝</div></div><div class="creator-stat"><div class="creator-stat-value">421</div><div class="creator-stat-label">作品</div></div></div></div>
+            <div class="creator-card"><div class="creator-avatar"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e" alt=""></div><div class="creator-name">David Wang</div><div class="creator-category">摄影师</div><div class="creator-stats"><div class="creator-stat"><div class="creator-stat-value">22.1k</div><div class="creator-stat-label">粉丝</div></div><div class="creator-stat"><div class="creator-stat-value">567</div><div class="creator-stat-label">作品</div></div></div></div>
+            <div class="creator-card"><div class="creator-avatar"><img src="http://pan.cisa.cc/view.php/4fbd8479457bbd044637d0b4b602fb63.png" alt=""></div><div class="creator-name">Lisa Park</div><div class="creator-category">UI设计师</div><div class="creator-stats"><div class="creator-stat"><div class="creator-stat-value">9.7k</div><div class="creator-stat-label">粉丝</div></div><div class="creator-stat"><div class="creator-stat-value">278</div><div class="creator-stat-label">作品</div></div></div></div>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <div class="container">
+        <h2>准备好展示你的创意了吗？</h2>
+        <p>立即加入艺视界，与全球创作者一起成长，让你的作品被世界看见</p>
+        <div class="cta-buttons">
+            <a href="#" class="btn btn-white" style="padding: 1rem 2.5rem; font-size: 1.1rem;">免费注册账号</a>
+            <a href="#" class="btn btn-outline-white" style="padding: 1rem 2.5rem; font-size: 1.1rem;">了解更多</a>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>艺视界 - 让视觉艺术被世界看见</h3>
+                <p>全球领先的视觉艺术平台，连接设计师、艺术家与创意爱好者，打造数字艺术展示、创意交流与作品交易的一站式平台。</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>平台功能</h3>
+                <ul>
+                    <li><a href="#">数字艺术展示</a></li>
+                    <li><a href="#">创意社区</a></li>
+                    <li><a href="#">作品集管理</a></li>
+                    <li><a href="#">在线教程</a></li>
+                    <li><a href="#">创作挑战</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>资源支持</h3>
+                <ul>
+                    <li><a href="#">帮助中心</a></li>
+                    <li><a href="#">API文档</a></li>
+                    <li><a href="#">创作者指南</a></li>
+                    <li><a href="#">社区规范</a></li>
+                    <li><a href="#">常见问题</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>关于我们</h3>
+                <ul>
+                    <li><a href="#">公司简介</a></li>
+                    <li><a href="#">团队介绍</a></li>
+                    <li><a href="#">新闻动态</a></li>
+                    <li><a href="#">合作机会</a></li>
+                    <li><a href="#">联系方式</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Viscentre · 艺视界 保留所有权利. | <a href="#">隐私政策</a> | <a href="#">服务条款</a></p>
+        <p style="margin-top: 1.15rem; font-size: 0.91rem;">本页面仅用于域名展示，不构成任何商业承诺。购买域名联系ai@altoai.cn</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+            navbar.classList.add('navbar-scrolled');
+        } else {
+            navbar.classList.remove('navbar-scrolled');
+        }
+    });
+
+    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-in');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.feature-card, .showcase-item, .creator-card').forEach(el => {
+        observer.observe(el);
+    });
+
+    document.querySelectorAll('.showcase-item, .creator-card').forEach(el => {
+        el.addEventListener('click', function() {
+            this.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 100);
+        });
+    });
+
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    mobileMenuBtn.addEventListener('click', function() {
+        const icon = this.querySelector('i');
+        icon.classList.toggle('fa-bars');
+        icon.classList.toggle('fa-times');
+    });
+</script>
+</body><body oncontextmenu="return false" onselectstart="return false" ondragstart="return false" onbeforecopy="return false" oncopy=document.selection.empty() onselect=document.selection.empty()>
+</html>

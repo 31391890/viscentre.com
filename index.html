@@ -1,0 +1,548 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>viscentre.com - 域名出售</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            color: white;
+            padding: 80px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+
+        .domain-name {
+            font-size: 58px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
+            letter-spacing: 3px;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            font-size: 24px;
+            opacity: 0.95;
+            margin-top: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 25px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            padding: 30px 50px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #667eea;
+            display: block;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        .visual-section {
+            padding: 50px;
+            background: linear-gradient(135deg, #fff5f6 0%, #f3e8ff 100%);
+        }
+
+        .visual-title {
+            text-align: center;
+            font-size: 32px;
+            color: #667eea;
+            margin-bottom: 40px;
+        }
+
+        .visual-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .visual-card {
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+            text-align: center;
+            border-top: 4px solid #f093fb;
+        }
+
+        .visual-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .visual-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #667eea 0%, #f093fb 100%);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+        }
+
+        .visual-icon svg {
+            width: 36px;
+            height: 36px;
+            fill: white;
+        }
+
+        .visual-card h4 {
+            color: #667eea;
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .visual-card p {
+            color: #666;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .content {
+            padding: 50px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .features {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .feature-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            border-color: #667eea;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #f093fb 100%);
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .feature-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
+        }
+
+        .feature-text h3 {
+            color: #667eea;
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .feature-text p {
+            color: #555;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .contact-section {
+            background: linear-gradient(135deg, #667eea 0%, #f093fb 100%);
+            padding: 45px;
+            border-radius: 18px;
+            color: white;
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .contact-section h2 {
+            font-size: 30px;
+            margin-bottom: 35px;
+            text-align: center;
+            position: relative;
+        }
+
+        .contact-section h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #f093fb, #f5576c);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 22px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            margin-bottom: 18px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.18);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .contact-icon svg {
+            width: 26px;
+            height: 26px;
+            fill: white;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .contact-value {
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .cta-button {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(240, 147, 251, 0.4);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 35px;
+            color: #888;
+            font-size: 14px;
+            border-top: 1px solid #e0e0e0;
+            background: #fafafa;
+        }
+
+        @media (max-width: 900px) {
+            .content {
+                grid-template-columns: 1fr;
+                padding: 30px;
+            }
+
+            .visual-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .domain-name {
+                font-size: 40px;
+            }
+
+            .header {
+                padding: 60px 30px;
+            }
+
+            .stats-bar {
+                flex-direction: column;
+                gap: 20px;
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .domain-name {
+                font-size: 30px;
+            }
+
+            .tagline {
+                font-size: 18px;
+            }
+
+            .contact-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .feature-item {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部区域 -->
+        <div class="header">
+            <div class="domain-name">viscentre.com</div>
+            <div class="tagline">VIS + CENTRE = 视觉创意中心</div>
+            <div class="status-badge">✅ <a href="dn.html" style="text-decoration: none; font-weight: 700">
+<font color="#FFFFFF">概念站展示</font></a></p></div>
+        </div>
+
+        <!-- 数据统计栏 -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-number">9</span>
+                <span class="stat-label">字符长度</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">.COM</span>
+                <span class="stat-label">顶级后缀</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">2</span>
+                <span class="stat-label">核心关键词</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">视觉创意</span>
+                <span class="stat-label">热门赛道</span>
+            </div>
+        </div>
+
+        <!-- 视觉应用场景区域 -->
+        <div class="visual-section">
+            <h2 class="visual-title">🎨 视觉创意应用场景</h2>
+            
+            <div class="visual-grid">
+                <div class="visual-card">
+                    <div class="visual-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    </div>
+                    <h4>视觉设计公司</h4>
+                    <p>品牌视觉设计、UI/UX设计、平面设计等专业创意服务机构</p>
+                </div>
+                
+                <div class="visual-card">
+                    <div class="visual-icon">
+                        <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h-5v-2.5c0-1.07.89-1.5 1.97-1.5.27 0 .53.02.78.06.25-.04.51-.06.78-.06z"/></svg>
+                    </div>
+                    <h4>视觉艺术平台</h4>
+                    <p>数字艺术展示、视觉创意社区、设计师作品集平台</p>
+                </div>
+                
+                <div class="visual-card">
+                    <div class="visual-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                    </div>
+                    <h4>视觉培训机构</h4>
+                    <p>视觉设计培训、创意技能教育、在线设计课程平台</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 主要内容区 -->
+        <div class="content">
+            <!-- 域名价值说明 -->
+            <div class="features">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    </div>
+                    <div class="feature-text">
+                        <h3>视觉创意赛道核心资产</h3>
+                        <p>"VIS"（视觉）+ "CENTRE"（中心）组合，完美诠释视觉创意中心概念，2026年创意设计产业持续增长，品牌视觉需求旺盛</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h-5v-2.5c0-1.07.89-1.5 1.97-1.5.27 0 .53.02.78.06.25-.04.51-.06.78-.06z"/></svg>
+                    </div>
+                    <div class="feature-text">
+                        <h3>语义清晰易传播</h3>
+                        <p>两个英文单词组合，全球通用无歧义，"视觉+中心"传递专业创意服务理念，品牌记忆点突出，降低营销成本</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                    </div>
+                    <div class="feature-text">
+                        <h3>适配场景广泛</h3>
+                        <p>适合视觉设计公司、创意工作室、艺术平台、设计培训机构等多个高价值客户群体，付费能力强</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                    </div>
+                    <div class="feature-text">
+                        <h3>.COM顶级后缀价值</h3>
+                        <p>全球最权威顶级域名，国际认可度最高，创意产业终端首选，品牌信任度天然加持，增值空间稳定</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 联系方式区域 -->
+            <div class="contact-section">
+                <h2>📞 立即联系</h2>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    </div>
+                    <div class="contact-info">
+                        <div class="contact-label">电子邮箱</div>
+                        <div class="contact-value">ai@altoai.cn</div>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    </div>
+                    <div class="contact-info">
+                        <div class="contact-label">微信联系</div>
+                        <div class="contact-value">altoai</div>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    </div>
+                    <div class="contact-info">
+                        <div class="contact-label">QQ咨询</div>
+                        <div class="contact-value">31391890</div>
+                    </div>
+                </div>
+
+                <a href="mailto:ai@altoai.cn?subject=咨询域名viscentre.com" class="cta-button">
+                    📧 发送邮件询价
+                </a>
+
+                <div style="text-align: center; margin-top: 25px;">
+                    <p style="color: rgba(255,255,255,0.8); font-size: 15px;">欢迎随时咨询 · 价格面议</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部 -->
+        <div class="footer">
+            <p>© 2026 viscentre.com | Altoai.cn | 保留所有权利</p>
+            <p style="margin-top: 10px; font-size: 13px;">本页面仅用于域名出售展示，不构成任何商业承诺</p>
+        </div>
+    </div>
+</body><body oncontextmenu="return false" onselectstart="return false" ondragstart="return false" onbeforecopy="return false" oncopy=document.selection.empty() onselect=document.selection.empty()>
+</html>
